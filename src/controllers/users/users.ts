@@ -27,11 +27,7 @@ export class usersController implements IUsersController {
       },
     })
 
-    return {
-      name: newUser.name,
-      secondName: newUser.secondName,
-      firstLastName: newUser.firstLastName,
-      secondLastName: newUser.secondLastName,
-    }
+    const { password, ...userWhitoutPassword } = newUser
+    return userWhitoutPassword
   }
 }

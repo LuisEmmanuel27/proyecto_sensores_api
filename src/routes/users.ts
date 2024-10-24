@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { usersController } from '../controllers/users/users'
-import { User } from '../interfaces/interfaces'
+import { User, UserCreateInput } from '../interfaces/interfaces'
+import { userSchema } from '../schemas/users/users'
 
 export const createUsersRouter = () => {
   const usersRouter = Router()
@@ -12,6 +13,24 @@ export const createUsersRouter = () => {
       res.json(users)
     } catch (error) {
       res.status(500).json({ message: 'Error al obtener los usuarios' })
+    }
+  })
+
+  usersRouter.post('/', async (req, res) => {
+    // Validar el cuerpo de la solicitud usando `safeParse`
+    const validationResult = userSchema.safeParse(req.body)
+
+    // Si la validación falla
+    if (!validationResult.success) {
+      return res.status(400).json({ message: validationResult.error.errors })
+    }
+
+    try {
+      const data: UserCreateInput = validationResult.data
+      const newUser = await controller.createUser(data)
+      res.status(201).json(newUser)
+    } catch (error) {
+      res.status(500).json({ message: 'Error al crear el usuario' })
     }
   })
 

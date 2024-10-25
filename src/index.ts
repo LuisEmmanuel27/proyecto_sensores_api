@@ -1,5 +1,5 @@
 import express, { Express } from 'express'
-import { createUsersRouter } from './users/routes'
+import { createUsersRouter } from '@/users/routes'
 
 // process.loadEnvFile(), nueva feature de node.js 20.10
 process.loadEnvFile()

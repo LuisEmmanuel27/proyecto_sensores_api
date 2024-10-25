@@ -1,5 +1,5 @@
-import prisma from '../lib/prisma'
 import bcrypt from 'bcrypt'
+import prisma from '@/lib/prisma'
 import { IUsersController } from './types'
 import { User, UserCreated, UserCreateInput } from './interfaces'
 

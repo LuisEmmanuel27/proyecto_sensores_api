@@ -13,45 +13,58 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user {
-  id             Int      @id @default(autoincrement())
-  email          String   @unique
-  password       String
-  name           String?
-  secondName     String?
-  firstLastName  String?
-  secondLastName String?
-  sensors        sensor[]
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  names     String
+  surnames  String
+  createdAt DateTime @default(now())
+  sensors   Sensor[]
+  reports   Report[]
 }
 
-model sensor {
+model Sensor {
   id              Int           @id @default(autoincrement())
   name            String
-  location        location      @relation(fields: [locationId], references: [id])
+  location        Location      @relation(fields: [locationId], references: [id])
   locationId      Int
-  mesurements     measurement[]
+  measurements    Measurement[]
   connected       Boolean
-  batteryLevel    Int?
-  temperatureMax  Int?          @default(30)
+  batteryLevel    Int? // Puede ser nulo, ya que podría no tener batería o no se mide.
+  temperatureMax  Int?          @default(30) // Valores por defecto comunes para sensores.
   temperatureMin  Int?          @default(0)
   humidityMax     Int?          @default(100)
   humidityMin     Int?          @default(0)
-  readingInterval Int?          @default(10)
-  user            user?         @relation(fields: [userId], references: [id])
-  userId          Int?
+  readingInterval Int?          @default(10) // Intervalo de lectura en minutos.
+  user            User          @relation(fields: [userId], references: [id])
+  userId          Int
+  addedAt         DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt // Esto tiene sentido si los sensores pueden cambiar su nombre u otros datos.
+  reports         Report[]
 }
 
-model location {
+model Location {
   id      Int      @id @default(autoincrement())
   address String
-  sensors sensor[]
+  sensors Sensor[]
 }
 
-model measurement {
+model Measurement {
   id          Int      @id @default(autoincrement())
-  sensor      sensor   @relation(fields: [sensorId], references: [id])
+  sensor      Sensor   @relation(fields: [sensorId], references: [id])
   sensorId    Int
   temperature Float
   humidity    Float
-  timestamp   DateTime
+  timestamp   DateTime // Este campo debe ser obligatorio, ya que una medición siempre debe tener una marca de tiempo.
+}
+
+model Report {
+  id        Int      @id @default(autoincrement())
+  sensor    Sensor   @relation(fields: [sensorId], references: [id]) // Relación correcta con Sensor.
+  sensorId  Int
+  content   String // Campo para almacenar el contenido del reporte.
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id]) // Relación correcta con User.
+  userId    Int // Clave foránea que apunta al usuario que generó el reporte.
 }

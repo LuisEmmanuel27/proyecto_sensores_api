@@ -20,14 +20,12 @@ export class usersController implements IUsersController {
       data: {
         email: user.email,
         password: hashedPassword,
-        name: user.name,
-        secondName: user.secondName,
-        firstLastName: user.firstLastName,
-        secondLastName: user.secondLastName,
+        names: user.names,
+        surnames: user.surnames,
       },
     })
 
-    const { password, ...userWhitoutPassword } = newUser
-    return userWhitoutPassword
+    const { password, email, createdAt, ...userFiltered } = newUser
+    return userFiltered
   }
 }

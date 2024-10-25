@@ -4,25 +4,21 @@ export interface User {
   id: number
   email: string
   password: string
-  name?: string | null // Opcional
-  secondName?: string | null // Opcional
-  firstLastName?: string | null // Opcional
-  secondLastName?: string | null // Opcional
-  sensors?: Sensor[] // Opcional, ya que puede no tener sensores
+  names: string // Ahora es obligatorio
+  surnames: string // Ahora es obligatorio
+  createdAt: Date
+  sensors?: Sensor[] // Opcional, un usuario puede no tener sensores
+  reports?: Report[] // Relación opcional con Report, puede no tener reportes
 }
 
 export interface UserCreateInput {
   email: string
   password: string
-  name?: string | null
-  secondName?: string | null
-  firstLastName?: string | null
-  secondLastName?: string | null
+  names: string
+  surnames: string
 }
 
 export interface UserCreated {
-  name?: string | null
-  secondName?: string | null
-  firstLastName?: string | null
-  secondLastName?: string | null
+  names: string
+  surnames: string
 }

@@ -1,4 +1,4 @@
-import { User, UserCreated, UserCreateInput } from '../interfaces/interfaces'
+import { User, UserCreated, UserCreateInput } from './interfaces'
 
 // controllers/users/types.ts
 export interface IUsersController {

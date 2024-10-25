@@ -1,7 +1,7 @@
 import { Router } from 'express'
-import { usersController } from '../controllers/users/users'
-import { User, UserCreateInput } from '../interfaces/interfaces'
-import { userSchema } from '../schemas/users/users'
+import { usersController } from './controller'
+import { User, UserCreateInput } from './interfaces'
+import { userSchema } from './schemas'
 
 export const createUsersRouter = () => {
   const usersRouter = Router()

@@ -1,7 +1,7 @@
-import prisma from '../../lib/prisma'
+import prisma from '../lib/prisma'
 import bcrypt from 'bcrypt'
-import { IUsersController } from '../../types/users'
-import { User, UserCreated, UserCreateInput } from '../../interfaces/interfaces'
+import { IUsersController } from './types'
+import { User, UserCreated, UserCreateInput } from './interfaces'
 
 export class usersController implements IUsersController {
   constructor() {}

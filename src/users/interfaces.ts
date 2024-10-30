@@ -22,3 +22,16 @@ export interface UserCreated {
   names: string
   surnames: string
 }
+
+export interface UserUpdateInput {
+  id: number
+  email?: string
+  names?: string
+  surnames?: string
+}
+
+export interface UserUpdated {
+  success: boolean
+  updateUser?: UserCreated
+  message?: string
+}

@@ -13,3 +13,13 @@ export const userSchema = z.object({
   names: z.string().min(1, { message: 'El campo nombres es obligatorio' }),
   surnames: z.string().min(1, { message: 'El campo apellidos es obligatorio' }),
 })
+
+export const userUpdateSchema = z.object({
+  id: z
+    .number()
+    .int()
+    .positive({ message: 'El ID debe ser un número positivo' }),
+  email: z.string().email().optional(),
+  names: z.string().optional(),
+  surnames: z.string().optional(),
+})

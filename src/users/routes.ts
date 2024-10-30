@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { usersController } from './controller'
-import { User, UserCreateInput } from './interfaces'
+import { User, UserCreateInput, UserUpdateInput } from './interfaces'
 import { userSchema } from './schemas'
 
 export const createUsersRouter = () => {
@@ -31,6 +31,32 @@ export const createUsersRouter = () => {
       res.status(201).json(newUser)
     } catch (error) {
       res.status(500).json({ message: 'Error al crear el usuario' })
+    }
+  })
+
+  usersRouter.put('/:id', async (req, res) => {
+    const { id } = req.params
+
+    if (!id) return res.status(400).json({ message: 'Falta el id del usuario' })
+
+    try {
+      const data: UserUpdateInput = {
+        id: Number(id),
+        email: req.body.email,
+        names: req.body.names,
+        surnames: req.body.surnames,
+      }
+
+      const updatedUserResponse = await controller.updateUser(data)
+
+      if (!updatedUserResponse.success)
+        return res.status(404).json({ message: updatedUserResponse.message })
+
+      res.status(200).json(updatedUserResponse)
+    } catch (error) {
+      res
+        .status(500)
+        .json({ message: 'Error inesperado al actualizar el usuario' })
     }
   })
 
